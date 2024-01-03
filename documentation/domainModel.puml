@@ -1,0 +1,43 @@
+@startuml Domain Model
+
+!define ENTITY entity
+!define VALUE value
+
+package "Entities" {
+  ENTITY User {
+    +userId: ObjectId
+    +username: String
+    +password: String
+    +email: String
+    +profilePic: String
+  }
+  
+  ENTITY TravelPlan {
+    +travelPlanId: ObjectId
+    +title: String
+    +description: String
+    +startDate: Date
+    +endDate: Date
+    +amountOfDays: int
+  }
+  
+  ENTITY Destination {
+    +destinationId: ObjectId
+    +city: String
+    +country: String
+    +continent: String
+  }
+  
+  ENTITY Stop {
+    +stopId: ObjectId
+    +name: String
+    +description: String
+  }
+}
+
+TravelPlan *-- "1" User : createdBy
+TravelPlan "*" -- "1" Destination : includes
+Destination "*" -- "0..*" Stop : contains
+User "*" -- "*" TravelPlan : hasAccessTo
+
+@enduml
